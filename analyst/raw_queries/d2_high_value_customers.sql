@@ -17,9 +17,9 @@ WITH
     c.*,
     SUM(a.balance) AS total_balance
   FROM
-    `normalized.customers` c
+    `raw.customers` c
   JOIN
-    `normalized.accounts` a
+    `raw.accounts` a
   ON
     c.customer_id = a.customer_id
   GROUP BY
@@ -42,9 +42,9 @@ WITH
     c.customer_id,
     SUM(l.loan_amount) AS total_loans
   FROM
-    `normalized.customers` c
+    `raw.customers` c
   JOIN
-    `normalized.loans` l
+    `raw.loans` l
   ON
     c.customer_id = l.customer_id
   GROUP BY

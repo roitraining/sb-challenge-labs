@@ -17,9 +17,9 @@ WITH
     c.customer_id,
     ARRAY_AGG(account_type) AS accts
   FROM
-    normalized.customers c
+    raw.customers c
   JOIN
-    normalized.accounts a
+    raw.accounts a
   ON
     c.customer_id = a.customer_id
   GROUP BY
@@ -50,9 +50,9 @@ WITH
     COUNT(transaction_id) AS num_transactions,
     customer_id,
   FROM
-    normalized.accounts a
+    raw.accounts a
   JOIN
-    normalized.transactions t
+    raw.transactions t
   ON
     a.account_id = t.account_id
   where

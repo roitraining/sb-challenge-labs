@@ -6,8 +6,8 @@ WITH transactions_w_customerids AS (
     DATE(t.transaction_datetime) AS transaction_date,
     a.customer_id
   FROM
-    `sb-challenge-labs.normalized.transactions` t
-    JOIN `sb-challenge-labs.normalized.accounts` a ON a.account_id = t.account_id
+    `raw.transactions` t
+    JOIN `raw.accounts` a ON a.account_id = t.account_id
   WHERE
     DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -90 day)
 )
