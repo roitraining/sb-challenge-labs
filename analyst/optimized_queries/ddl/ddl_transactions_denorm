@@ -1,0 +1,36 @@
+CREATE OR REPLACE TABLE optimized.transactions ( 
+    `customer_id` STRING NOT NULL,
+    `first_name` STRING,
+    `last_name` STRING,
+    `email` STRING,
+    `phone_number` STRING,
+    `address` STRING,
+    `city` STRING,
+    `province` STRING,
+    `postal_code` STRING,
+    `primary_branch` STRING,
+    `account_id` STRING NOT NULL,
+    `account_type` STRING,
+    `balance` NUMERIC,
+    `date_opened` DATE,
+    `transaction_id` STRING NOT NULL,
+    `transaction_type` STRING,
+    `amount` NUMERIC,
+    `transaction_datetime` DATETIME )
+PARTITION BY  date(transaction_datetime)
+CLUSTER BY
+  customer_id AS (
+  SELECT
+    c.*,
+    a.* EXCEPT(customer_id),
+    t.* EXCEPT(account_id)
+  FROM
+    `sb-challenge-labs.normalized.customers` c
+  JOIN
+    `sb-challenge-labs.normalized.accounts` a
+  ON
+    c.customer_id = a.customer_id
+  JOIN
+    `sb-challenge-labs.normalized.transactions` t
+  ON
+    t.account_id = a.account_id )
