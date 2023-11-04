@@ -58,7 +58,7 @@ CREATE OR REPLACE VIEW
       PERCENT_RANK() OVER (ORDER BY num_transactions) AS percentile
     FROM
       transactions_accounts),
-    top_30 AS (
+    top_40 AS (
       -- filter percentile table for percentile > 0.6
       -- project customer_id, num_transactions, and percentile
     SELECT
@@ -67,7 +67,7 @@ CREATE OR REPLACE VIEW
       percentiles
     WHERE
       percentile > 0.6 )
-    -- join savings_only and top_30 tables
+    -- join savings_only and top_40 tables
     -- project customer_id, num_transactions, and percentile
   SELECT
     s.customer_id,
@@ -76,7 +76,7 @@ CREATE OR REPLACE VIEW
   FROM
     savings_only s
   JOIN
-    top_30 t
+    top_40 t
   ON
     s.customer_id = t.customer_id
   ORDER BY

@@ -14,7 +14,7 @@ CREATE OR REPLACE VIEW
     ON
       a.account_id = t.account_id
     WHERE
-      DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -90 day) ),
+      DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -89 day) ),
     date_customer_with_one_transaction AS (
     SELECT
       transaction_date,
@@ -29,7 +29,7 @@ CREATE OR REPLACE VIEW
     COUNT(DISTINCT  customer_id) unique_7day_active_customers
   FROM
     date_customer_with_one_transaction,
-    UNNEST(GENERATE_ARRAY(1, 7)) i
+    UNNEST(GENERATE_ARRAY(0, 6)) i
   GROUP BY
     report_date
   HAVING
