@@ -1,5 +1,6 @@
   -- 7 DAY ACTIVE CUSTOMERS
   -- Difficulty: 4/5
+  
 CREATE OR REPLACE VIEW
   `views.7da` AS (
   WITH

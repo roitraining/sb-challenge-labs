@@ -9,7 +9,7 @@
   --
   -- Difficulty: 1/5
 CREATE OR REPLACE VIEW
-  views.loans AS (
+  views.loans_by_branch AS (
   SELECT
     FORMAT_DATE('%m/%Y', loan_date) AS month_year,
     e.branch_id AS branch_id,

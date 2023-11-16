@@ -1,6 +1,4 @@
-  -- CHECKING UPSELL
-CREATE OR REPLACE VIEW
-  `views.upsell_candidates` AS (
+
   WITH
     customers_accounts AS (
       -- join customers and accounts tables
@@ -32,7 +30,7 @@ CREATE OR REPLACE VIEW
     transactions_accounts AS (
       -- join the accounts and transactions tables
       -- filter by transactions in the last 180 days
-      -- filter by account_type = "Savings"
+      -- filter by account_type = "Savings" or "Checking"
       -- group by account_id, customer_id, and account_type
       -- project customer_id and num_transactions
     SELECT
@@ -45,8 +43,8 @@ CREATE OR REPLACE VIEW
     ON
       a.account_id = t.account_id
     WHERE
-      DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -180 DAY)
-      AND account_type = "Savings"
+      DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -179 DAY)
+      AND (account_type = "Savings" or account_type="Checking")
     GROUP BY
       customer_id ),
     percentiles AS (
@@ -58,16 +56,16 @@ CREATE OR REPLACE VIEW
       PERCENT_RANK() OVER (ORDER BY num_transactions) AS percentile
     FROM
       transactions_accounts),
-    top_40 AS (
-      -- filter percentile table for percentile > 0.6
+    top_half AS (
+      -- filter percentile table for percentile > 0.5
       -- project customer_id, num_transactions, and percentile
     SELECT
       *
     FROM
       percentiles
     WHERE
-      percentile > 0.6 )
-    -- join savings_only and top_40 tables
+      percentile > 0.5 )
+    -- join savings_only and top_half tables
     -- project customer_id, num_transactions, and percentile
   SELECT
     s.customer_id,
@@ -80,4 +78,4 @@ CREATE OR REPLACE VIEW
   ON
     s.customer_id = t.customer_id
   ORDER BY
-    num_transactions DESC)
+    num_transactions DESC
