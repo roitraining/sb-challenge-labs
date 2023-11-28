@@ -1,4 +1,5 @@
-
+CREATE OR REPLACE VIEW
+  views.upsell_candidates AS (
   WITH
     customers_accounts AS (
       -- join customers and accounts tables
@@ -44,7 +45,8 @@
       a.account_id = t.account_id
     WHERE
       DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -179 DAY)
-      AND (account_type = "Savings" or account_type="Checking")
+      AND (account_type = "Savings"
+        OR account_type="Checking")
     GROUP BY
       customer_id ),
     percentiles AS (
@@ -74,8 +76,8 @@
   FROM
     savings_only s
   JOIN
-    top_40 t
+    top_half t
   ON
     s.customer_id = t.customer_id
   ORDER BY
-    num_transactions DESC
+    num_transactions DESC)
