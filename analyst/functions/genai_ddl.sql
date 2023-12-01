@@ -1,3 +1,3 @@
 CREATE OR REPLACE MODEL
   `models.upsell` REMOTE
-WITH CONNECTION `us.upsell`  OPTIONS(ENDPOINT = 'text-bison@001')
+WITH CONNECTION `us.upsell`  OPTIONS(ENDPOINT = 'text-bison')

@@ -30,9 +30,9 @@ WITH
 SELECT
   *
 FROM
-  ml.GENERATE_TEXT( MODEL `models.upsell`,
+  ML.GENERATE_TEXT( MODEL `models.upsell`,
     TABLE prompts,
-    STRUCT( 0.5 AS temperature,
+    STRUCT( 0.9 AS temperature,
       300 AS max_output_tokens,
       0.5 AS top_p,
       40 AS top_k,
