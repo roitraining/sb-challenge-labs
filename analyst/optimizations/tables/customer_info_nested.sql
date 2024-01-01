@@ -27,6 +27,7 @@ CREATE TEMP TABLE transactions AS (
   SELECT
     customer_id,
     ARRAY_AGG(STRUCT( transaction_id,
+        t.account_id,
         transaction_type,
         amount,
         transaction_datetime )) AS transactions
