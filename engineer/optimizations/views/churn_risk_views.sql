@@ -35,7 +35,7 @@ CREATE MATERIALIZED VIEW
     9,
     10);
 CREATE VIEW
-  views.churn_risk AS (
+  `views.churn_risk_opt` AS (
   SELECT
     *
   FROM
