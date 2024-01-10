@@ -16,7 +16,7 @@ CREATE OR REPLACE VIEW
       WHERE
         account_id=t.account_id) AS type
     FROM
-      `sb-challenge-labs.optimized.customer_info_nested`,
+      `optimized.customer_info_nested`,
       UNNEST(transactions) AS t
     WHERE
       DATE(t.transaction_datetime) >= DATE_ADD("2023-10-15", INTERVAL -179 DAY)),

@@ -24,7 +24,7 @@ WITH
   FROM
     customer_info c
   JOIN
-    `sb-challenge-labs.raw.branches` b
+    `raw.branches` b
   ON
     b.branch_id = c.primary_branch)
 SELECT

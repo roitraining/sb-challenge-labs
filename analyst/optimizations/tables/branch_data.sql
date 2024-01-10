@@ -1,5 +1,5 @@
 CREATE OR REPLACE TABLE
-  `sb-challenge-labs.optimized.branch_data` AS (
+  `optimized.branch_data` AS (
   WITH
     nested_accounts AS(
     SELECT
@@ -15,13 +15,13 @@ CREATE OR REPLACE TABLE
           balance,
           date_opened )) AS accounts
     FROM
-      `normalized.customers` c
+      `raw.customers` c
     JOIN
-      `normalized.accounts` a
+      `raw.accounts` a
     ON
       c.customer_id = a.customer_id
     JOIN
-      `normalized.branches` b
+      `raw.branches` b
     ON
       b.branch_id = c.primary_branch
     GROUP BY
@@ -41,9 +41,9 @@ CREATE OR REPLACE TABLE
           cc.cvv,
           cc.credit_limit )) AS credit_cards
     FROM
-      `normalized.credit_cards` cc
+      `raw.credit_cards` cc
     JOIN
-      `normalized.customers` c
+      `raw.customers` c
     ON
       c.customer_id = cc.customer_id
     GROUP BY
@@ -58,9 +58,9 @@ CREATE OR REPLACE TABLE
           l.loan_amount,
           l.loan_date )) AS loans
     FROM
-      `normalized.loans` l
+      `raw.loans` l
     JOIN
-      `sb-challenge-labs.normalized.employees` e
+      `raw.employees` e
     ON
       e.employee_id = l.employee_id
     GROUP BY

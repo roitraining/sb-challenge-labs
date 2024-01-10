@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW
-  `views.churn_risk_opt` AS(
+CREATE MATERIALIZED VIEW
+  `views.trans_count_mv` AS(
   WITH
     denorm AS (
     SELECT
@@ -33,6 +33,12 @@ CREATE OR REPLACE VIEW
     7,
     8,
     9,
-    10
-  HAVING
-    COUNT(transaction_id) < 5)
+    10);
+CREATE VIEW
+  views.churn_risk AS (
+  SELECT
+    *
+  FROM
+    views.trans_count_mv
+  WHERE
+    num_transactions < 5 )
